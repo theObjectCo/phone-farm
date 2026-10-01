@@ -1,0 +1,7 @@
+<Project>
+  <!-- This host is linux-arm64: the x86_64 Javac task's native zip library cannot load.
+       There is no Java source in this project, so the target is a no-op. -->
+  <Target Name="_CompileJava" Inputs="@(_AndroidMSBuildAllProjects)" Outputs="$(_AndroidCompileJavaStampFile)">
+    <Touch Files="$(_AndroidCompileJavaStampFile)" AlwaysCreate="true" />
+  </Target>
+</Project>

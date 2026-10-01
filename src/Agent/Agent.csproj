@@ -1,0 +1,34 @@
+<Project>
+  <Import Project="Sdk.props" Sdk="Microsoft.NET.Sdk" />
+  <PropertyGroup>
+    <TargetFramework>net10.0-android</TargetFramework>
+    <SupportedOSPlatformVersion>26</SupportedOSPlatformVersion>
+    <OutputType>Exe</OutputType>
+    <Nullable>disable</Nullable>
+    <LangVersion>latest</LangVersion>
+    <ApplicationTitle>PhoneFarm Agent</ApplicationTitle>
+    <ApplicationId>pl.mz1.phonefarm.agent</ApplicationId>
+    <ApplicationDisplayVersion>0.1</ApplicationDisplayVersion>
+    <ApplicationVersion>1</ApplicationVersion>
+    <RunAOTCompilation>false</RunAOTCompilation>
+    <AndroidManifestMerger>legacy</AndroidManifestMerger>
+    <UseFastDeployment>false</UseFastDeployment>
+    <EmbedAssembliesIntoApk>true</EmbedAssembliesIntoApk>
+    <RuntimeIdentifiers>android-arm64</RuntimeIdentifiers>
+    <RuntimeIdentifier Condition="'$(RuntimeIdentifier)' == ''">android-arm64</RuntimeIdentifier>
+    <Aapt2ToolPath Condition="'$(Aapt2ToolPath)' == '' AND '$(AAPT2_TOOL_PATH)' != ''">$(AAPT2_TOOL_PATH)/</Aapt2ToolPath>
+    <!-- Debug APKs are signed with the local debug keystore. -->
+  </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="../Worker.Contracts/Worker.Contracts.csproj" />
+  </ItemGroup>
+
+
+
+
+  <Import Project="Sdk.targets" Sdk="Microsoft.NET.Sdk" />
+
+</Project>
+
+
+
