@@ -1,0 +1,187 @@
+{
+  "name": "phonefarm-vscode",
+  "displayName": "PhoneFarm",
+  "description": "Monitor and run PhoneFarm jobs from VS Code.",
+  "version": "0.1.0",
+  "publisher": "theObjectCo",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/theObjectCo/phone-farm.git"
+  },
+  "engines": {
+    "vscode": "^1.90.0"
+  },
+  "categories": [
+    "Other",
+    "Testing"
+  ],
+  "main": "./extension.js",
+  "activationEvents": [
+    "onStartupFinished"
+  ],
+  "contributes": {
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "phonefarm",
+          "title": "PhoneFarm",
+          "icon": "resources/phonefarm.svg"
+        }
+      ]
+    },
+    "views": {
+      "phonefarm": [
+        {
+          "id": "phoneFarm.jobs",
+          "name": "Jobs"
+        },
+        {
+          "id": "phoneFarm.phones",
+          "name": "Phones"
+        }
+      ]
+    },
+    "commands": [
+      {
+        "command": "phoneFarm.refresh",
+        "title": "PhoneFarm: Refresh",
+        "icon": "$(refresh)"
+      },
+      {
+        "command": "phoneFarm.connect",
+        "title": "PhoneFarm: Connect Dispatcher",
+        "icon": "$(plug)"
+      },
+      {
+        "command": "phoneFarm.openDispatcher",
+        "title": "PhoneFarm: Open Dispatcher",
+        "icon": "$(link-external)"
+      },
+      {
+        "command": "phoneFarm.runCachedWorker",
+        "title": "PhoneFarm: Run Cached Worker",
+        "icon": "$(run-all)"
+      },
+      {
+        "command": "phoneFarm.submitWorkerAssembly",
+        "title": "PhoneFarm: Submit Worker Assembly"
+      },
+      {
+        "command": "phoneFarm.showJob",
+        "title": "PhoneFarm: Show Job JSON"
+      },
+      {
+        "command": "phoneFarm.cancelJob",
+        "title": "PhoneFarm: Cancel Job",
+        "icon": "$(debug-stop)"
+      },
+      {
+        "command": "phoneFarm.retryFailedShards",
+        "title": "PhoneFarm: Retry Failed Shards",
+        "icon": "$(debug-restart)"
+      },
+      {
+        "command": "phoneFarm.unregisterAgent",
+        "title": "PhoneFarm: Forget Agent",
+        "icon": "$(trash)"
+      }
+    ],
+    "menus": {
+      "view/title": [
+        {
+          "command": "phoneFarm.runCachedWorker",
+          "when": "view == phoneFarm.jobs",
+          "group": "navigation@1"
+        },
+        {
+          "command": "phoneFarm.refresh",
+          "when": "view == phoneFarm.jobs",
+          "group": "navigation@2"
+        },
+        {
+          "command": "phoneFarm.openDispatcher",
+          "when": "view == phoneFarm.jobs",
+          "group": "navigation@3"
+        },
+        {
+          "command": "phoneFarm.refresh",
+          "when": "view == phoneFarm.phones",
+          "group": "navigation@1"
+        }
+      ],
+      "view/item/context": [
+        {
+          "command": "phoneFarm.showJob",
+          "when": "view == phoneFarm.jobs && viewItem =~ /^phoneFarm\\.job/",
+          "group": "navigation@1"
+        },
+        {
+          "command": "phoneFarm.cancelJob",
+          "when": "view == phoneFarm.jobs && viewItem =~ /^phoneFarm\\.job\\.(running|queued|canceled)$/i",
+          "group": "inline"
+        },
+        {
+          "command": "phoneFarm.retryFailedShards",
+          "when": "view == phoneFarm.jobs && viewItem == phoneFarm.job.failed",
+          "group": "inline"
+        },
+        {
+          "command": "phoneFarm.unregisterAgent",
+          "when": "view == phoneFarm.phones && viewItem =~ /^phoneFarm\\.agent/",
+          "group": "inline"
+        }
+      ],
+      "commandPalette": [
+        {
+          "command": "phoneFarm.showJob",
+          "when": "never"
+        },
+        {
+          "command": "phoneFarm.unregisterAgent",
+          "when": "never"
+        }
+      ]
+    },
+    "configuration": {
+      "title": "PhoneFarm",
+      "properties": {
+        "phoneFarm.dispatcherUrl": {
+          "type": "string",
+          "default": "http://localhost:8080",
+          "description": "PhoneFarm dispatcher base URL."
+        },
+        "phoneFarm.pollIntervalMs": {
+          "type": "number",
+          "default": 3000,
+          "minimum": 1000,
+          "description": "How often VS Code refreshes dispatcher status."
+        },
+        "phoneFarm.requestTimeoutMs": {
+          "type": "number",
+          "default": 8000,
+          "minimum": 1000,
+          "description": "Timeout for dispatcher HTTP requests."
+        },
+        "phoneFarm.onlineThresholdSeconds": {
+          "type": "number",
+          "default": 15,
+          "minimum": 5,
+          "description": "Agent is considered online when last seen within this number of seconds."
+        },
+        "phoneFarm.defaultShards": {
+          "type": "number",
+          "default": 16,
+          "minimum": 1,
+          "description": "Default shard count used when rerunning cached workers."
+        },
+        "phoneFarm.defaultIterations": {
+          "type": "number",
+          "default": 20000000,
+          "minimum": 0,
+          "description": "Default iteration count used when a cached worker does not expose a default."
+        }
+      }
+    }
+  }
+}

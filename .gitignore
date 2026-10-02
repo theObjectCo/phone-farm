@@ -3,3 +3,5 @@ obj/
 *.user
 *.bak
 *.bak-*
+*.vsix
+node_modules/

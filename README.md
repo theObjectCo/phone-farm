@@ -178,6 +178,12 @@ PhoneFarm currently assumes a trusted local network:
 - Agents can claim and run jobs if they can reach the dispatcher.
 - The project is not intended for exposure to untrusted networks.
 
+## VS Code extension
+
+An experimental VS Code extension lives in `extensions/vscode-phonefarm`.
+
+The first version uses the existing dispatcher API only. It can show agents and jobs, cancel or retry jobs, and rerun cached worker assemblies.
+
 ## License
 
 This project is licensed under the MIT License. See `LICENSE` for details.
